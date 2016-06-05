@@ -11,11 +11,11 @@ class MainWindow(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("One-handed bandit")
-        self.credit = tk.IntVar(value=0)
-        self.stat = 0   # Режим вывода статистики
+        self.stat = 0  # Режим вывода статистики
+        self.credit = tk.IntVar(value=0)       # Кредит (сколько денег ещё можно потратить на игру)
         self.games_count = tk.IntVar(value=0)   # Сыграно игр
-        self.wins = tk.IntVar(value=0)
-        self.jackpots = tk.IntVar(value=0)
+        self.wins = tk.IntVar(value=0)      # Выигрышей
+        self.jackpots = tk.IntVar(value=0)  # Джекпотов
 
         frame1 = tk.Frame(self)
         add_button = tk.Button(frame1, text="Pay!", command=self.pay)
@@ -31,13 +31,13 @@ class MainWindow(tk.Tk):
         self.label_1.grid(row=1, column=0)
         self.text_2 = tk.StringVar(value="You earned:")
         tk.Label(frame2, textvariable=self.text_2).grid(row=2, column=0)
-        self.earned = tk.IntVar(value=0)
+        self.earned = tk.IntVar(value=0)        # Выиграно денег
         self.label_2 = tk.Label(frame2, textvariable=self.earned)
         self.label_2.grid(row=3, column=0)
         tk.Label(frame2, text="Games played:").grid(row=4, column=0)
         tk.Label(frame2, textvariable=self.games_count).grid(row=5, column=0)
         frame2.grid(row=0, column=1, sticky='news', padx=10, pady=10)
-        self.balance = tk.IntVar(value=0)
+        self.balance = tk.IntVar(value=0)       # Баланс в деньгах (может быть отрицательным).
         tk.Label(frame2, text="Balance:").grid(row=6, column=0)
         tk.Label(frame2, textvariable=self.balance).grid(row=7, column=0)
 
