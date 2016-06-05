@@ -16,6 +16,7 @@ class MainWindow(tk.Tk):
         self.games_count = tk.IntVar(value=0)   # Сыграно игр
         self.wins = tk.IntVar(value=0)      # Выигрышей
         self.jackpots = tk.IntVar(value=0)  # Джекпотов
+        self.spent = tk.IntVar(value=0)      # Сколько за игру потрачено денег.
 
         frame1 = tk.Frame(self)
         add_button = tk.Button(frame1, text="Pay!", command=self.pay)
@@ -38,8 +39,10 @@ class MainWindow(tk.Tk):
         tk.Label(frame2, textvariable=self.games_count).grid(row=5, column=0)
         frame2.grid(row=0, column=1, sticky='news', padx=10, pady=10)
         self.balance = tk.IntVar(value=0)       # Баланс в деньгах (может быть отрицательным).
-        tk.Label(frame2, text="Balance:").grid(row=6, column=0)
-        tk.Label(frame2, textvariable=self.balance).grid(row=7, column=0)
+        self.text_3 = tk.StringVar(value="Balance:")
+        tk.Label(frame2, textvariable=self.text_3).grid(row=6, column=0)
+        self.label_3 = tk.Label(frame2, textvariable=self.balance)
+        self.label_3.grid(row=7, column=0)
 
         frame3 = tk.Frame(self)
         self.result_1 = tk.IntVar()
@@ -68,17 +71,23 @@ class MainWindow(tk.Tk):
             self.label_1.config(textvariable=self.wins)
             self.text_2.set("Jackpots:")
             self.label_2.config(textvariable=self.jackpots)
+            self.text_3.set("Money spent:")
+            self.label_3.config(textvariable=self.spent)
         else:
             self.stat = 0
             self.text_1.set("Credit:")
             self.label_1.config(textvariable=self.credit)
             self.text_2.set("You earned:")
             self.label_2.config(textvariable=self.earned)
+            self.text_3.set("Balance:")
+            self.label_3.config(textvariable=self.balance)
 
     def play(self):
         if self.credit.get() - global_params['price'] < 0:
             showinfo("Out of money!", "Enter more money!")
         else:
+            random.seed()
+            self.spent.set(self.spent.get() + global_params['price'])
             self.credit.set(self.credit.get() - global_params['price'])
             self.games_count.set(self.games_count.get() + 1)
             for result in (self.result_1, self.result_2, self.result_3):
